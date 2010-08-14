@@ -56,9 +56,19 @@ body {
   margin: 0 auto;
 }
 
+a {
+  color: #FAE;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #CAE;
+  text-decoration: none;
+}
+
 header {
   background-color: #AAA;
-  padding: 0 2em;
+  padding: 0 .2em;
 }
 
 header h1 {

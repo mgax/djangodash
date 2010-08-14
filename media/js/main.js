@@ -2,7 +2,7 @@
   function Map(element, options) {
     var gmap;
     options = options || {}
-    var coords = options.coordinates || { lat: 0, lon: 0 };
+    var coords = options.coordinates || { lat: 23, lon: 44 };
 
     function initializeMap() {
       var latlng = new google.maps.LatLng(coords.lat, coords.lon);
