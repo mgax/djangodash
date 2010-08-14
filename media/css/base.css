@@ -119,3 +119,18 @@ li.lan {
 li.wifi {
   background-image: url(/media/images/wifi.gif);
 }
+
+fieldset {
+  border: 1px solid #CCC;
+  margin-bottom: 1em;
+  padding: .5em;
+}
+
+fieldset input {
+  padding: 0;
+  margin: 0;
+}
+
+fieldset label {
+  margin-left: .25em;
+}
