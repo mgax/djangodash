@@ -33,3 +33,12 @@ def save_polygon(points_json):
                       bbox_left=min(p['lon'] for p in points))
     polygon.save()
     return polygon
+
+def filter_polygons(bbox_top, bbox_bottom, bbox_right, bbox_left):
+    filters = {
+        'bbox_top__gte': bbox_bottom,
+        'bbox_bottom__lte': bbox_top,
+        'bbox_right__gte': bbox_left,
+        'bbox_left__lte': bbox_right,
+    }
+    return Polygon.objects.filter(**filters)
