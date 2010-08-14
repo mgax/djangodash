@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <title>{% block title %}{% endblock %}</title>
+    {% block extrahead %}{% endblock %}
+
+    <!-- CSS : implied media="all" -->
+    <link rel="stylesheet" href="css/style.css?v=1">
+  </head>
+
+  <body>
+    <header>
+    </header>
+    
+    <div id="main">
+      {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+    </footer>
+  </body>
+
+
+  <!-- Javascript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script src="js/script.js?v=1"></script>
+</body>
+</html>
