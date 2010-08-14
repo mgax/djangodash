@@ -91,4 +91,16 @@ aside {
 
 aside ul li {
   list-style: none;
+  padding-left: 26px;
+  margin: .5em 0;
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+}
+
+li.lan {
+  background-image: url(/media/images/eth.gif);
+}
+
+li.wifi {
+  background-image: url(/media/images/wifi.gif);
 }
