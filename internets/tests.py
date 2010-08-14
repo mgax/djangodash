@@ -37,11 +37,14 @@ class PolygonTest(TestCase):
         assert ids(filter_polygons(22, 15, 22, 12)) == ids([poly1, poly2])
 
     def test_piston_lan(self):
-        poly1 = save_polygon(json.dumps(poly_data_1))
-        lan = Lan(name="LAN1", info="some info", geo=poly1)
-        lan.save()
-
+        """ """
+        response = self.client.post(reverse('lan_piston'),
+                    {'name': 'Lan1', 'info': 'info',
+                     'geo': json.dumps(poly_data_1)})
         response = self.client.get(reverse('lan_piston'),
                 {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
         assert response.status_code == 200
-        assert len(json.loads(response.content)) is not 0
+        data = json.loads(response.content)[0]
+        assert len(data) is not 0
+        assert data['name'] == 'Lan1'
+        assert json.loads(data['geo']['points_json']) == poly_data_1

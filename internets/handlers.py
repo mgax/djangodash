@@ -1,6 +1,6 @@
 from piston.handler import BaseHandler
-from models import Lan, Wifi, filter_polygons
-from forms import LanGetForm
+from models import Lan, Wifi, filter_polygons, save_polygon
+from forms import LanGetForm, LanPostForm
 from piston.utils import validate
 
 class LanHandler(BaseHandler):
@@ -16,5 +16,12 @@ class LanHandler(BaseHandler):
         polygon_ids = [polygon.id for polygon in polygons.all()[:50]]
         return Lan.objects.filter(geo__in=polygon_ids).all()
 
-    def create(self):
+    @validate(LanPostForm, 'POST')
+    def create(self, request):
         """ """
+        request.form.cleaned_data['geo'] = save_polygon(
+                                            request.form.cleaned_data['geo'])
+        lan = Lan(**request.form.cleaned_data)
+        lan.save()
+        return True
+
