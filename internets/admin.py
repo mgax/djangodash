@@ -1,10 +1,16 @@
 from django.contrib import admin
 
-from models import Provider
+from models import Lan, Wifi
 
-class ProviderAdmin(admin.ModelAdmin):
+class LanAdmin(admin.ModelAdmin):
     """ """
     class Meta:
-        verbose_name = "Providers"
-        
-admin.site.register(Provider, ProviderAdmin)
+        verbose_name = "Local Area Networks"
+
+class WifiAdmin(admin.ModelAdmin):
+    """ """
+    class Meta:
+        verbose_name = "WIFI hotspots"
+
+admin.site.register(Lan, LanAdmin)
+admin.site.register(Wifi, WifiAdmin)
