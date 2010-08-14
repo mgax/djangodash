@@ -15,14 +15,16 @@
     }
 
     function addPointAt() {
-
     }
     
     function addWifiAt() {
-
     }
 
     gmap = initializeMap();
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      var current_location = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      gmap.setCenter(current_location);
+    });
 
     return {
       gmap: gmap,
