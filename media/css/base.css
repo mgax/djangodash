@@ -69,12 +69,26 @@ header h1 {
   -webkit-transform: translate(0, -5px) rotate(-2deg);
 }
 
+
 #main {
   background-color: #FFF;
   padding: .5em;
+  position: relative;
 }
 
 #map {
   width: 600px;
   height: 600px;
+}
+
+aside {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 170px;
+  margin: .5em;
+}
+
+aside ul li {
+  list-style: none;
 }
