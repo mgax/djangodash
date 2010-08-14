@@ -1,2 +1,2 @@
 django==1.2.1
-django-piston
+-e hg+http://bitbucket.org/jespern/django-piston#egg=django-piston

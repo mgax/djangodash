@@ -1,6 +1,17 @@
+import json
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
-from internets.models import save_polygon, filter_polygons
+from models import Lan, Wifi, save_polygon, filter_polygons
+
+poly_data_1 = [{'lat': 10, 'lon': 10},
+               {'lat': 10, 'lon': 15},
+               {'lat': 15, 'lon': 12},
+               {'lat': 17, 'lon': 10}]
+poly_data_2 = [{'lat': 20, 'lon': 20},
+               {'lat': 20, 'lon': 25},
+               {'lat': 25, 'lon': 22},
+               {'lat': 27, 'lon': 20}]
 
 class PolygonTest(TestCase):
     def test_create_poly(self):
@@ -12,18 +23,9 @@ class PolygonTest(TestCase):
         assert poly.bbox_right == 15
 
     def test_filter_polygons(self):
-        import json
+
         def ids(objects):
             return set(ob.id for ob in objects)
-
-        poly_data_1 = [{'lat': 10, 'lon': 10},
-                       {'lat': 10, 'lon': 15},
-                       {'lat': 15, 'lon': 12},
-                       {'lat': 17, 'lon': 10}]
-        poly_data_2 = [{'lat': 20, 'lon': 20},
-                       {'lat': 20, 'lon': 25},
-                       {'lat': 25, 'lon': 22},
-                       {'lat': 27, 'lon': 20}]
 
         poly1 = save_polygon(json.dumps(poly_data_1))
         poly2 = save_polygon(json.dumps(poly_data_2))
@@ -33,3 +35,13 @@ class PolygonTest(TestCase):
         assert ids(filter_polygons(15, 0, 100, 0)) == ids([poly1])
         assert ids(filter_polygons(19, 18, 100, 0)) == ids([])
         assert ids(filter_polygons(22, 15, 22, 12)) == ids([poly1, poly2])
+
+    def test_piston_lan(self):
+        poly1 = save_polygon(json.dumps(poly_data_1))
+        lan = Lan(name="LAN1", info="some info", geo=poly1)
+        lan.save()
+
+        response = self.client.get(reverse('lan_piston'),
+                {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
+        assert response.status_code == 200
+        assert len(json.loads(response.content)) is not 0
