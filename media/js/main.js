@@ -38,5 +38,6 @@
   var map_element = document.getElementById('map');
   if ( map_element ) {
     var map = new Map(map_element);
+    //setTimeout(function() { createPolyEditor(map.gmap, 0, 0); }, 500);
   }
 })();

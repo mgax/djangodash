@@ -1,4 +1,111 @@
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, figure, footer, header, 
+hgroup, menu, nav, section, menu,
+time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}                  
+
+article, aside, figure, footer, header, 
+hgroup, nav, section { display:block; }
+
+nav ul { list-style:none; }
+
+blockquote, q { quotes:none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+
+a { margin:0; padding:0; font-size:100%; vertical-align:baseline; background:transparent; }
+
+ins { background-color:#ff9; color:#000; text-decoration:none; }
+
+mark { background-color:#ff9; color:#000; font-style:italic; font-weight:bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom:1px dotted #000; cursor:help; }
+
+/* tables still need cellspacing="0" in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+
+hr { display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0; }
+
+input, select { vertical-align:middle; }
+/* END RESET CSS */
+
+body {
+  font-family: Garamond;
+  background-color: #CCC;
+  border: .5em solid #666;
+  border-width: 0 .5em;
+  width: 800px;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #AAA;
+  padding: 0 2em;
+}
+
+header h1 {
+  font-size: 5em;
+  color: #FFF;
+  z-index: 3;
+  -moz-transform: translate(0, -5px) rotate(-2deg);
+  -webkit-transform: translate(0, -5px) rotate(-2deg);
+}
+
+
+#main {
+  background-color: #FFF;
+  padding: .5em;
+  position: relative;
+}
+
 #map {
   width: 600px;
   height: 600px;
+}
+
+aside {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 170px;
+  height: 600px;
+  margin: .5em;
+}
+
+aside h2 {
+  font-size: 1.2em;
+}
+
+aside ul li {
+  list-style: none;
+  padding-left: 26px;
+  margin: .5em 0;
+  background-repeat: no-repeat;
+  background-position: 0px 1px;
+}
+
+li.lan {
+  background-image: url(/media/images/eth.gif);
+}
+
+li.wifi {
+  background-image: url(/media/images/wifi.gif);
 }
