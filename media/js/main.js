@@ -1,6 +1,8 @@
 (function() {
-  function Map(coords, element) {
+  function Map(element, options) {
     var gmap;
+    options = options || {}
+    var coords = options.coordinates || { lat: 0, lon: 0 };
 
     function initializeMap() {
       var latlng = new google.maps.LatLng(coords.lat, coords.lon);
@@ -9,7 +11,15 @@
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-      return new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+      return new google.maps.Map(element, myOptions);
+    }
+
+    function addPointAt() {
+
+    }
+    
+    function addWifiAt() {
+
     }
 
     gmap = initializeMap();
@@ -20,5 +30,11 @@
       addWifiAt: addWifiAt
     }
 
+  }
+
+
+  var map_element = document.getElementById('map');
+  if ( map_element ) {
+    var map = new Map(map_element);
   }
 })();
