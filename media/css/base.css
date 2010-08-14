@@ -86,7 +86,12 @@ aside {
   right: 0px;
   top: 0px;
   width: 170px;
+  height: 600px;
   margin: .5em;
+}
+
+aside h2 {
+  font-size: 1.2em;
 }
 
 aside ul li {
