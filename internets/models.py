@@ -14,3 +14,22 @@ class Lan(Provider):
 class Wifi(Provider):
     """ This will be shown on the map as a point """
     password = models.CharField(max_length=200)
+
+class Polygon(models.Model):
+    points_json = models.TextField() # container for JSON
+    bbox_top = models.FloatField(editable=False, db_index=True)
+    bbox_bottom = models.FloatField(editable=False, db_index=True)
+    bbox_left = models.FloatField(editable=False, db_index=True)
+    bbox_right = models.FloatField(editable=False, db_index=True)
+
+def save_polygon(points_json):
+    import json
+    points = json.loads(points_json)
+    # TODO: validate JSON structure
+    polygon = Polygon(points_json=points_json,
+                      bbox_top=max(p['lat'] for p in points),
+                      bbox_bottom=min(p['lat'] for p in points),
+                      bbox_right=max(p['lon'] for p in points),
+                      bbox_left=min(p['lon'] for p in points))
+    polygon.save()
+    return polygon

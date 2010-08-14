@@ -1,23 +1,11 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
-
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
-
->>> 1 + 1 == 2
-True
-"""}
-
+class PolygonTest(TestCase):
+    def test_create_poly(self):
+        from internets.models import save_polygon
+        points_json = '[{"lat": 40, "lon": 15}, {"lat": 45, "lon": 10}]'
+        poly = save_polygon(points_json)
+        assert poly.bbox_top == 45
+        assert poly.bbox_bottom == 40
+        assert poly.bbox_left == 10
+        assert poly.bbox_right == 15
