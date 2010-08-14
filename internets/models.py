@@ -1,9 +1,19 @@
 from django.db import models
+from django import forms
 
 class Point(models.Model):
     """ Used to mark Wifi spots"""
     lat = models.FloatField()
     lon = models.FloatField()
+
+    def clean(self):
+        if self.lat > 90 or self.lat < -90:
+            raise forms.ValidationError("Invalid latitude")
+        if self.lon > 180 or self.lon < -180:
+            raise forms.ValidationError("Invalid longitude")
+
+    def __unicode__(self):
+        return u"lat: %r lon: %r" % (self.lat, self.lon)
 
 class Polygon(models.Model):
     """ Used to mark LAN's """
@@ -58,3 +68,12 @@ def filter_polygons(top, bottom, right, left):
         'bbox_right__gte': left,
     }
     return Polygon.objects.filter(**filters)
+
+def filter_points(top, bottom, right, left):
+    filters = {
+        'lon__lte': top,
+        'lon__gte': bottom,
+        'lat__lte': right,
+        'lat__gte': left,
+    }
+    return Point.objects.filter(**filters)

@@ -1,8 +1,10 @@
 import json
+from django import forms
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from models import Lan, Wifi, save_polygon, filter_polygons
+from models import Lan, Wifi, Point, save_polygon, filter_polygons, \
+                    filter_points
 
 poly_data_1 = [{'lat': 10, 'lon': 10},
                {'lat': 10, 'lon': 15},
@@ -12,6 +14,10 @@ poly_data_2 = [{'lat': 20, 'lon': 20},
                {'lat': 20, 'lon': 25},
                {'lat': 25, 'lon': 22},
                {'lat': 27, 'lon': 20}]
+
+point_data_1 = {'lat': 2.331, 'lon': 1.1}
+point_data_2 = {'lat': -14.331, 'lon': 45}
+point_data_3 = {'lat': -92, 'lon': 20}
 
 class PolygonTest(TestCase):
     def test_create_poly(self):
@@ -48,3 +54,32 @@ class PolygonTest(TestCase):
         assert len(data) is not 0
         assert data['name'] == 'Lan1'
         assert json.loads(data['geo']['points_json']) == poly_data_1
+
+    def test_create_points(self):
+        point1 = Point(**point_data_1)
+        point1.clean()
+        point2 = Point(**point_data_2)
+        point1.clean()
+        point3 = Point(**point_data_3)
+        self.assertRaises(forms.ValidationError, point3.clean)
+
+    def test_filter_points(self):
+        #TODO: Negative values validation
+        point1 = Point(**point_data_1)
+        point1.save()
+        point2 = Point(**point_data_2)
+        point2.save()
+        assert [x for x in filter_points(100, 0, 100, 0)] == [point1]
+
+    def test_piston_wifi(self):
+        """ """
+        response = self.client.post(reverse('wifi_piston'),
+                    {'name': 'Wifi1', 'info': 'info',
+                     'geo': json.dumps(point_data_1)})
+        #response = self.client.get(reverse('lan_piston'),
+        #        {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
+        #assert response.status_code == 200
+        #data = json.loads(response.content)[0]
+        #assert len(data) is not 0
+        #assert data['name'] == 'wifi1'
+        #assert json.loads(data['geo']) == poly_data_1
