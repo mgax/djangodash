@@ -110,6 +110,14 @@ internets.InternetsBrowser = function(map) {
           "<h3>"+lan_data['name']+"</h3>" +
           "<p>"+lan_data['info']+"</p>"
       );
+      delete_button = IS_STAFF?'<br /><button class="delete-poly">Delete</button>':'';
+      var bubble = new google.maps.InfoWindow({
+        content:
+          "<h3>"+lan_data['name']+"</h3>" +
+          "<p>"+lan_data['info']+"</p>" +
+          delete_button +
+          '<button class="edit-poly">Edit</button>'
+      });
       polygon.position = polygon.getPath().getAt(0);
       bubble.open(map, polygon);
     }
