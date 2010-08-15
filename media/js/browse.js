@@ -43,13 +43,9 @@ internets.InternetsBrowser = function(map) {
   }
 
   function createWifi(wifi_data) {
-    var icon_url = MEDIA_URL+"images/vertex-normal.png";
-    var icon = new google.maps.MarkerImage(icon_url);
-    icon.anchor = new google.maps.Point(8, 8);
-
     var coord = new google.maps.LatLng(wifi_data.geo.lat, wifi_data.geo.lon);
     var marker = new google.maps.Marker({ map: map, position: coord,
-                                          icon: icon });
+                                          icon: internets.icon_normal });
     var li = $('<li class="wifi">').text(wifi_data['name']);
     li.data('marker', marker);
     internets_list.append(li);
