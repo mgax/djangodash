@@ -47,8 +47,18 @@ internets.InternetsBrowser = function(map) {
     var marker = new google.maps.Marker({ map: map, position: coord,
                                           icon: internets.icon_normal });
     var li = $('<li class="wifi">').text(wifi_data['name']);
+    li.mouseover(styleHighlight);
+    li.mouseout(styleNormal);
     li.data('marker', marker);
     internets_list.append(li);
+
+    function styleHighlight() {
+      marker.setIcon(internets.icon_hover);
+    }
+
+    function styleNormal() {
+      marker.setIcon(internets.icon_normal);
+    }
   }
 
   function createLan(lan_data) {
@@ -64,7 +74,6 @@ internets.InternetsBrowser = function(map) {
     li.mouseover(styleHighlight);
     li.mouseout(styleNormal);
     li.click(focusOnLan);
-
     li.data('polygon', polygon);
     internets_list.append(li);
 
