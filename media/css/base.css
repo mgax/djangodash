@@ -146,6 +146,7 @@ fieldset label {
 .fullscreen header {
   background: transparent;
   position: absolute;
+  z-index: 3;
 }
 
 .fullscreen header h1 {
@@ -172,6 +173,7 @@ fieldset label {
   border-style: solid;
   border-color: #CCC;
   -moz-border-radius: .5em 0em 0em .5em;
+  border-radius: .5em 0em 0em .5em;
   padding: .5em;
   height: auto;
 }
