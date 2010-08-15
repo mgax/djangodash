@@ -81,7 +81,7 @@
   }
 
   internets.newWifi = function(map, point) {
-    var marker = internets.WifiPoint(map, point);
+    var marker = internets.PointEditor(map, point);
     var form = $('<form>').submit(function() {
       var form_data = form.serialize() + '&geo=' + encodeURIComponent(JSON.stringify(marker.position()));
       $.ajax({url: "/api/wifi", type: 'POST', data: form_data,

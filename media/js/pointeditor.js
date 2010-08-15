@@ -1,5 +1,5 @@
 (function() {
-  internets.WifiPoint = function(map, point) {
+  internets.PointEditor = function(map, point) {
     var icon_url_normal = MEDIA_URL+"images/vertex-normal.png";
     var icon_url_hover = MEDIA_URL+"images/vertex-hover.png";
     var icon_normal = new google.maps.MarkerImage(icon_url_normal);
