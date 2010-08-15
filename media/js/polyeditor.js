@@ -4,7 +4,7 @@ internets.PolyEditor = function(map, point) {
   var lat = point.lat(), lon = point.lng();
   var bounds = map.getBounds();
   var width = bounds.getSouthWest().lng() - bounds.getNorthEast().lng();
-  var delta = width/8;
+  var delta = width/12;
 
   var icon_url_normal = MEDIA_URL+"images/vertex-normal.png";
   var icon_url_hover = MEDIA_URL+"images/vertex-hover.png";

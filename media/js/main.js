@@ -16,38 +16,49 @@
       return new google.maps.Map(element, myOptions);
     }
 
-    function addPointAt() {
-    }
-    
-    function addWifiAt() {
-    }
-
     gmap = initializeMap();
     navigator.geolocation.getCurrentPosition(function(pos) {
-      var current_location = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      var current_location = new google.maps.LatLng(pos.coords.latitude,
+                                                    pos.coords.longitude);
       gmap.setCenter(current_location);
     });
 
     return {
       gmap: gmap,
-      addPointAt: addPointAt,
-      addWifiAt: addWifiAt
     }
 
   }
 
   internets.newNetwork = function(map, point) {
     var poly_editor = new internets.PolyEditor(map, point);
-    var anchor = poly_editor.vertices.getAt(0);
-    var info_window = new google.maps.InfoWindow({content: "hello world"});
-    info_window.open(map, anchor);
 
-    google.maps.event.addListenerOnce(info_window, 'closeclick',
-                                      function() { poly_editor.destroy(); });
+    var frm = $('<form>').submit(function(evt) {
+      evt.preventDefault();
+      var points = [];
+      poly_editor.vertice_points.forEach(function(p) {
+        points.push({lat: p.lat(), lon: p.lng()});
+      });
+      var form_data = frm.serialize() + '&geo=' +
+                      encodeURIComponent(JSON.stringify(points));
+      $(':input', frm).attr('disabled', 'disabled');
+      frm.append('saving... ');
+      $.ajax({url: "/api/lan", type: 'POST', data: form_data,
+              success: cleanup, error: function() {
+                frm.append('ERROR');
+                $(':input', frm).attr('disabled', null);
+              } });
+    });
+    frm.append('<input name="name">',
+               '<textarea name="info"></textarea>',
+               '<input type="submit" name="do" value="save">');
+    $('<input type="submit" name="do" value="cancel">').click(function(evt) {
+      evt.preventDefault(); cleanup(); }).appendTo(frm);
 
-    function onSubmit(json_data) {
-      console.log(json_data);
+    function cleanup() {
+      frm.remove();
+      poly_editor.destroy();
     }
+    frm.appendTo($('div#new-forms'));
   }
 })();
 
@@ -56,8 +67,14 @@ $(function() {
   if ( map_element ) {
     var map = new internets.Map(map_element);
 
-    google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
-      internets.newNetwork(map.gmap, evt.latLng);
+    $('button#new-lan').click(function(evt) {
+      var button = $(this);
+      var orig_text = button.text();
+      button.attr('disabled', 'disabled').text("Click on map");
+      google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
+        button.text(orig_text).attr('disabled', null);
+        internets.newNetwork(map.gmap, evt.latLng);
+      });
     });
   }
 });
