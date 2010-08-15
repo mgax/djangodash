@@ -64,22 +64,24 @@ class PolygonTest(TestCase):
         self.assertRaises(forms.ValidationError, point3.clean)
 
     def test_filter_points(self):
-        #TODO: Negative values validation
         point1 = Point(**point_data_1)
         point1.save()
         point2 = Point(**point_data_2)
         point2.save()
         assert [x for x in filter_points(100, 0, 100, 0)] == [point1]
+        assert [x for x in filter_points(0, -20, 50, 0)] == [point2]
 
     def test_piston_wifi(self):
         """ """
         response = self.client.post(reverse('wifi_piston'),
                     {'name': 'Wifi1', 'info': 'info',
                      'geo': json.dumps(point_data_1)})
-        #response = self.client.get(reverse('lan_piston'),
-        #        {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
-        #assert response.status_code == 200
-        #data = json.loads(response.content)[0]
-        #assert len(data) is not 0
-        #assert data['name'] == 'wifi1'
-        #assert json.loads(data['geo']) == poly_data_1
+        assert response.status_code == 200
+        assert json.loads(response.content) == True
+        response = self.client.get(reverse('wifi_piston'),
+                {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
+        assert response.status_code == 200
+        data = json.loads(response.content)[0]
+        assert len(data) is not 0
+        assert data['name'] == 'Wifi1'
+        assert data['geo'] == point_data_1

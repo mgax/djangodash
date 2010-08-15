@@ -71,9 +71,9 @@ def filter_polygons(top, bottom, right, left):
 
 def filter_points(top, bottom, right, left):
     filters = {
-        'lon__lte': top,
-        'lon__gte': bottom,
-        'lat__lte': right,
-        'lat__gte': left,
+        'lat__lte': top,
+        'lat__gte': bottom,
+        'lon__lte': right,
+        'lon__gte': left,
     }
     return Point.objects.filter(**filters)

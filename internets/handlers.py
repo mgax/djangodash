@@ -1,3 +1,4 @@
+import json
 from piston.handler import BaseHandler
 from models import Lan, Wifi, Point, filter_polygons, filter_points, \
                     save_polygon
@@ -42,8 +43,9 @@ class WifiHandler(BaseHandler):
     @validate(PostForm, 'POST')
     def create(self, request):
         """ """
-        request.form.cleaned_data['geo'] = Point(**request.form.\
-                                                 cleaned_data['geo'])
+        point = Point(**json.loads(request.form.cleaned_data['geo']))
+        point.save()
+        request.form.cleaned_data['geo'] = point
         wifi = Wifi(**request.form.cleaned_data)
         wifi.save()
         return True
