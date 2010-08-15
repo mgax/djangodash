@@ -1,6 +1,8 @@
 (function() {
 
 internets.InternetsBrowser = function(map) {
+  var bubble = new google.maps.InfoWindow({ content: '' });
+
   google.maps.event.addListener(map, 'idle', refreshInternets);
   $('input#filter-lan').add('input#filter-wifi').change(refreshInternets);
   var internets_list = $('ul#internets-list');
@@ -62,11 +64,11 @@ internets.InternetsBrowser = function(map) {
     }
 
     function showBubble(){
-      var bubble = new google.maps.InfoWindow({
-        content:
-          "<h3>"+wifi_data['name']+"</h3>" +
-          "<p>"+wifi_data['info']+"</p>"
-      });
+      bubble.setContent(
+        "<h3>"+wifi_data['name']+"</h3>" +
+        "<p>"+wifi_data['info']+"</p>"
+      );
+
       bubble.open(map, marker);
     }
   }
@@ -104,11 +106,10 @@ internets.InternetsBrowser = function(map) {
     }
 
     function showBubble(){
-      var bubble = new google.maps.InfoWindow({
-        content:
+      bubble.setContent(
           "<h3>"+lan_data['name']+"</h3>" +
           "<p>"+lan_data['info']+"</p>"
-      });
+      );
       polygon.position = polygon.getPath().getAt(0);
       bubble.open(map, polygon);
     }
