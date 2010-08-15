@@ -67,8 +67,7 @@
           },
 
           success: function() {
-            form.remove();
-            marker.destroy();
+            cleanup();
           },
 
           error: function() {
@@ -94,6 +93,7 @@
 
     function cleanup() {
       form.remove();
+      $('aside button').attr('disabled', null);
       poly_editor.destroy();
     }
     form.appendTo($('div#new-forms'));
@@ -113,6 +113,7 @@
           success: function() {
             form.remove();
             marker.destroy();
+            $('aside button').attr('disabled', null);
           },
 
           error: function() {
@@ -127,7 +128,11 @@
       return false;
     });
 
-    form.bind('reset', function() { form.remove(); marker.destroy(); });
+    form.bind('reset', function() {
+      form.remove();
+      marker.destroy();
+      $('aside button').attr('disabled', null);
+    });
 
     form.append('<input type="text" name="name" placeholder="Wireless Network Name">',
                 '<textarea name="info" placeholder="Wireless Network Information"></textarea>',
@@ -145,9 +150,12 @@ $(function() {
     $('button#new-lan').click(function(evt) {
       var button = $(this);
       var orig_text = button.text();
-      button.attr('disabled', 'disabled').text("Click on map");
+
+      $('aside button').attr('disabled', 'disabled');
+      button.text("Click on map");
+
       google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
-        button.text(orig_text).attr('disabled', null);
+        button.text(orig_text);
         internets.newNetwork(map.gmap, evt.latLng);
       });
     });
@@ -156,9 +164,12 @@ $(function() {
     $('button#new-wifi').click(function() {
       var button = $(this);
       var orig_text = button.text();
-      button.attr('disabled', 'disabled').text("Click on map");
+
+      $('aside button').attr('disabled', 'disabled');
+      button.text("Click on map");
+
       google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
-        button.text(orig_text).attr('disabled', null);
+        button.text(orig_text);
         internets.newWifi(map.gmap, evt.latLng);
       });
     });
