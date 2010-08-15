@@ -7,7 +7,7 @@ b, i,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, figure, footer, header, 
+article, aside, figure, footer, header,
 hgroup, menu, nav, section, menu,
 time, mark, audio, video {
   margin:0;
@@ -17,9 +17,9 @@ time, mark, audio, video {
   font-size:100%;
   vertical-align:baseline;
   background:transparent;
-}                  
+}
 
-article, aside, figure, footer, header, 
+article, aside, figure, footer, header,
 hgroup, nav, section { display:block; }
 
 nav ul { list-style:none; }
@@ -112,12 +112,24 @@ aside ul li {
   background-position: 0px 1px;
 }
 
+#internets-list li{
+  background-position: 5px;
+  cursor: pointer;
+}
+
+#internets-list li.active{
+  background-color: #D1D1D1;
+  -moz-border-radius: .5em;
+  border-radius: .5em;
+  height: 20px;
+}
+
 li.lan {
-  background-image: url(/media/images/eth.gif);
+  background: url(/media/images/eth.gif) left no-repeat;
 }
 
 li.wifi {
-  background-image: url(/media/images/wifi.gif);
+  background: url(/media/images/wifi.gif) left no-repeat;
 }
 
 fieldset {
