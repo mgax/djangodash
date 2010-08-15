@@ -44,9 +44,13 @@ class PolygonTest(TestCase):
 
     def test_piston_lan(self):
         """ """
+        #Create
         response = self.client.post(reverse('lan_piston'),
                     {'name': 'Lan1', 'info': 'info',
                      'geo': json.dumps(poly_data_1)})
+        assert response.status_code == 201
+
+        #Read
         response = self.client.get(reverse('lan_piston'),
                 {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
         assert response.status_code == 200
@@ -54,6 +58,15 @@ class PolygonTest(TestCase):
         assert len(data) is not 0
         assert data['name'] == 'Lan1'
         assert json.loads(data['geo']['points_json']) == poly_data_1
+
+        #Update
+        #lan = Lan.objects.latest('pk')
+        #response = self.client.put(reverse('lan_piston_update', args=[lan.pk]),
+        #                    {'name': 'Mod', 'info': lan.info,
+        #                     'geo': json.dumps({'lat': wifi.geo.lat,
+        #                                        'lon': wifi.geo.lon})})
+        #wifi = Wifi.objects.latest('pk')
+        #assert wifi.name == 'Mod'
 
     def test_create_points(self):
         point1 = Point(**point_data_1)
@@ -73,11 +86,13 @@ class PolygonTest(TestCase):
 
     def test_piston_wifi(self):
         """ """
+        #Create
         response = self.client.post(reverse('wifi_piston'),
                     {'name': 'Wifi1', 'info': 'info',
                      'geo': json.dumps(point_data_1)})
-        assert response.status_code == 200
-        assert json.loads(response.content) == True
+        assert response.status_code == 201
+
+        #Read
         response = self.client.get(reverse('wifi_piston'),
                 {'top': 100, 'bottom': 0, 'right': 100, 'left': 0})
         assert response.status_code == 200
@@ -85,3 +100,12 @@ class PolygonTest(TestCase):
         assert len(data) is not 0
         assert data['name'] == 'Wifi1'
         assert data['geo'] == point_data_1
+
+        #Update
+        wifi = Wifi.objects.latest('pk')
+        response = self.client.put(reverse('wifi_piston_update', args=[wifi.pk]),
+                            {'name': 'Mod', 'info': wifi.info,
+                             'geo': json.dumps({'lat': wifi.geo.lat,
+                                                'lon': wifi.geo.lon})})
+        wifi = Wifi.objects.latest('pk')
+        assert wifi.name == 'Mod'

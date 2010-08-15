@@ -3,10 +3,10 @@ from piston.handler import BaseHandler
 from models import Lan, Wifi, Point, filter_polygons, filter_points, \
                     save_polygon
 from forms import GetForm, PostForm
-from piston.utils import validate
+from piston.utils import rc, validate
 
 class LanHandler(BaseHandler):
-    allowed_methods = ('GET', 'POST')
+    allowed_methods = ('GET', 'POST', 'PUT')
     model = Lan
 
     fields = ('name', 'info', ('geo', ('points_json', )), )
@@ -25,10 +25,31 @@ class LanHandler(BaseHandler):
                                             request.form.cleaned_data['geo'])
         lan = Lan(**request.form.cleaned_data)
         lan.save()
-        return True
+        return rc.CREATED
+
+    @validate(PostForm, 'PUT')
+    def update(self, request, pk):
+        """ Check if object exists then check if user has permission to edit it
+
+        """
+        try:
+            lan = Lan.objects.get(pk=pk)
+        except Lan.DoesNotExist:
+            return rc.NOT_HERE
+        if lan.lock == True and not request.user.is_staff():
+            return rc.FORBIDDEN
+        lan.name = request.form.cleaned_data['name']
+        lan.info = request.form.cleaned_data['info']
+        geo = json.loads(request.form.cleaned_data['geo'])
+        if not (wifi.geo.lat == geo['lat'] and wifi.geo.lon == geo['lon']):
+            point = Point(**geo)
+        else:
+            point = wifi.geo
+        wifi.geo = point
+        wifi.save()
 
 class WifiHandler(BaseHandler):
-    allowed_methods = ('GET', 'POST')
+    allowed_methods = ('GET', 'POST', 'PUT')
     model = Wifi
 
     fields = ('name', 'info', ('geo', ('lon', 'lat')), )
@@ -48,4 +69,25 @@ class WifiHandler(BaseHandler):
         request.form.cleaned_data['geo'] = point
         wifi = Wifi(**request.form.cleaned_data)
         wifi.save()
-        return True
+        return rc.CREATED
+
+    @validate(PostForm, 'PUT')
+    def update(self, request, pk):
+        """ Check if object exists then check if user has permission to edit it
+
+        """
+        try:
+            wifi = Wifi.objects.get(pk=pk)
+        except Wifi.DoesNotExist:
+            return rc.NOT_HERE
+        if wifi.lock == True and not request.user.is_staff():
+            return rc.FORBIDDEN
+        wifi.name = request.form.cleaned_data['name']
+        wifi.info = request.form.cleaned_data['info']
+        geo = json.loads(request.form.cleaned_data['geo'])
+        if not (wifi.geo.lat == geo['lat'] and wifi.geo.lon == geo['lon']):
+            point = Point(**geo)
+        else:
+            point = wifi.geo
+        wifi.geo = point
+        wifi.save()
