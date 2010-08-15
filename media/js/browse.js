@@ -2,6 +2,7 @@
 
 internets.InternetsBrowser = function(map) {
   google.maps.event.addListener(map, 'idle', refreshInternets);
+  $('input#filter-lan').add('input#filter-wifi').change(refreshInternets);
   var internets_list = $('ul#internets-list');
 
   return {
@@ -13,19 +14,32 @@ internets.InternetsBrowser = function(map) {
     var data = { top: ne.lat(), right: ne.lng(),
                  bottom: sw.lat(), left: sw.lng() };
 
-    $.get('/api/lan', data, function(lan_list) {
-      $.get('/api/wifi', data, function(wifi_list) {
-        $('> li.lan', internets_list).each(function() {
-          $(this).data('polygon').setMap(null);
-        });
-        $('> li.wifi', internets_list).each(function() {
-          $(this).data('marker').setMap(null);
-        });
-        internets_list.empty();
-        $.each(lan_list, function(i, lan_data) { createLan(lan_data); });
-        $.each(wifi_list, function(i, wifi_data) { createWifi(wifi_data); });
+    loadLanList(data, function(lan_list) {
+      loadWifiList(data, function(wifi_list) {
+        showInternets(lan_list, wifi_list);
       });
     });
+
+    function loadLanList(data, callback) {
+      if(! $('input#filter-lan').is(':checked')) { callback([]); return; }
+      $.get('/api/lan', data, callback);
+    }
+    function loadWifiList(data, callback) {
+      if(! $('input#filter-wifi').is(':checked')) { callback([]); return; }
+      $.get('/api/wifi', data, callback);
+    }
+
+    function showInternets(lan_list, wifi_list) {
+      $('> li.lan', internets_list).each(function() {
+        $(this).data('polygon').setMap(null);
+      });
+      $('> li.wifi', internets_list).each(function() {
+        $(this).data('marker').setMap(null);
+      });
+      internets_list.empty();
+      $.each(lan_list, function(i, lan_data) { createLan(lan_data); });
+      $.each(wifi_list, function(i, wifi_data) { createWifi(wifi_data); });
+    }
   }
 
   function createWifi(wifi_data) {
