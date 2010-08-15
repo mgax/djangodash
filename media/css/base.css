@@ -134,3 +134,44 @@ fieldset input {
 fieldset label {
   margin-left: .25em;
 }
+
+.fullscreen {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+}
+
+.fullscreen header {
+  background: transparent;
+  position: absolute;
+}
+
+.fullscreen header h1 {
+  margin-left: 1em;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.fullscreen #map, .fullscreen #main {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+  position: absolute;
+}
+
+.fullscreen aside {
+  position: absolute;
+  margin: auto 0;
+  top: 50px;
+  background-color: #FFF;
+
+  border-width: .25em 0em .25em .25em;
+  border-style: solid;
+  border-color: #CCC;
+  -moz-border-radius: .5em 0em 0em .5em;
+  padding: .5em;
+  height: auto;
+}
