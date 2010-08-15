@@ -35,6 +35,20 @@
     }
 
   }
+
+  internets.newNetwork = function(map, point) {
+    var poly_editor = new internets.PolyEditor(map, point);
+    var anchor = poly_editor.vertices.getAt(0);
+    var info_window = new google.maps.InfoWindow({content: "hello world"});
+    info_window.open(map, anchor);
+
+    google.maps.event.addListenerOnce(info_window, 'closeclick',
+                                      function() { poly_editor.destroy(); });
+
+    function onSubmit(json_data) {
+      console.log(json_data);
+    }
+  }
 })();
 
 $(function() {
@@ -43,8 +57,7 @@ $(function() {
     var map = new internets.Map(map_element);
 
     google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
-      var poly_editor = new internets.PolyEditor(map.gmap, evt.latLng);
-      internets.destroyPoly = function() { poly_editor.destroy(); };
+      internets.newNetwork(map.gmap, evt.latLng);
     });
   }
 });

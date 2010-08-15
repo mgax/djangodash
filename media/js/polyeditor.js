@@ -19,9 +19,9 @@ internets.PolyEditor = function(map, point) {
 
   var vertices = new google.maps.MVCArray();
   var vertice_points = new google.maps.MVCArray();
-  createVertex(lat+delta, lon+delta);
-  createVertex(lat+delta, lon-delta);
   createVertex(lat-delta, lon-delta);
+  createVertex(lat+delta, lon-delta);
+  createVertex(lat+delta, lon+delta);
   createVertex(lat-delta, lon+delta);
 
   var midpoints = new google.maps.MVCArray();
@@ -30,6 +30,7 @@ internets.PolyEditor = function(map, point) {
   var polygon = new google.maps.Polygon({ map: map, paths: vertice_points });
 
   return {
+    vertices: vertices,
     vertice_points: vertice_points,
     destroy: destroy
   }
