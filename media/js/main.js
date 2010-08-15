@@ -49,7 +49,15 @@
   }
 
   internets.newNetwork = function(map, point) {
-    var poly_editor = new internets.PolyEditor(map, point);
+    var lat = point.lat(), lon = point.lng();
+    var bounds = map.getBounds();
+    var width = bounds.getSouthWest().lng() - bounds.getNorthEast().lng();
+    var delta = width/12;
+    var points = [{lat: lat-delta, lon:lon-delta},
+                  {lat: lat+delta, lon:lon-delta},
+                  {lat: lat+delta, lon:lon+delta},
+                  {lat: lat-delta, lon:lon+delta}];
+    var poly_editor = new internets.PolyEditor(map, points);
 
     var form = $('<form>').submit(function(evt) {
       evt.preventDefault();

@@ -1,17 +1,11 @@
 (function() {
 
-internets.PolyEditor = function(map, point) {
-  var lat = point.lat(), lon = point.lng();
-  var bounds = map.getBounds();
-  var width = bounds.getSouthWest().lng() - bounds.getNorthEast().lng();
-  var delta = width/12;
-
+internets.PolyEditor = function(map, points) {
   var vertices = new google.maps.MVCArray();
   var vertice_points = new google.maps.MVCArray();
-  createVertex(lat-delta, lon-delta);
-  createVertex(lat+delta, lon-delta);
-  createVertex(lat+delta, lon+delta);
-  createVertex(lat-delta, lon+delta);
+  for(var n=0; n < points.length; n++) {
+    createVertex(points[n].lat, points[n].lon);
+  }
 
   var midpoints = new google.maps.MVCArray();
   recreateMidpoints();
