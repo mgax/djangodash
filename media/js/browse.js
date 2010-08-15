@@ -1,7 +1,6 @@
 (function() {
 
 internets.InternetsBrowser = function(map) {
-  var bubble = new google.maps.InfoWindow({ content: '' });
 
   google.maps.event.addListener(map, 'idle', refreshInternets);
   $('input#filter-lan').add('input#filter-wifi').change(refreshInternets);
@@ -64,6 +63,7 @@ internets.InternetsBrowser = function(map) {
     }
 
     function showBubble(){
+      var bubble = new google.maps.InfoWindow({ content: '' });
       bubble.setContent(
         "<h3>"+wifi_data['name']+"</h3>" +
         "<p>"+wifi_data['info']+"</p>"
@@ -106,10 +106,6 @@ internets.InternetsBrowser = function(map) {
     }
 
     function showBubble(){
-      bubble.setContent(
-          "<h3>"+lan_data['name']+"</h3>" +
-          "<p>"+lan_data['info']+"</p>"
-      );
       delete_button = IS_STAFF?'<br /><button class="delete-poly">Delete</button>':'';
       var bubble = new google.maps.InfoWindow({
         content:
