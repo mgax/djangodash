@@ -179,13 +179,17 @@ fieldset label {
 }
 
 #new-forms form {
-  margin-top: 1em;
+  margin-top: .5em;
   padding: .25em;
 }
 
 #new-forms textarea, #new-forms input[type=text] {
   width: 180px;
   border: 1px solid #CCC;
+}
+
+#new-forms input[type=reset] {
+  margin-left: .5em;
 }
 
 #new-forms textarea {
