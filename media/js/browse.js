@@ -46,6 +46,10 @@ internets.InternetsBrowser = function(map) {
       }
 
       function focusOnLan() {
+        var geo = lan_data['geo'];
+        var ne = new google.maps.LatLng(geo['bbox_top'], geo['bbox_right']);
+        var sw = new google.maps.LatLng(geo['bbox_bottom'], geo['bbox_left']);
+        map.fitBounds(new google.maps.LatLngBounds(sw, ne));
       }
     }
   }

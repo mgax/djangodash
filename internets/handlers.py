@@ -9,7 +9,8 @@ class LanHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'PUT')
     model = Lan
 
-    fields = ('name', 'info', ('geo', ('points_json', )), )
+    fields = ('name', 'info', ('geo', ('points_json', 'bbox_top',
+                'bbox_bottom', 'bbox_left', 'bbox_right')), )
 
     @validate(GetForm, 'GET')
     def read(self, request):
