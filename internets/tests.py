@@ -60,13 +60,12 @@ class PolygonTest(TestCase):
         assert json.loads(data['geo']['points_json']) == poly_data_1
 
         #Update
-        #lan = Lan.objects.latest('pk')
-        #response = self.client.put(reverse('lan_piston_update', args=[lan.pk]),
-        #                    {'name': 'Mod', 'info': lan.info,
-        #                     'geo': json.dumps({'lat': wifi.geo.lat,
-        #                                        'lon': wifi.geo.lon})})
-        #wifi = Wifi.objects.latest('pk')
-        #assert wifi.name == 'Mod'
+        lan = Lan.objects.latest('pk')
+        response = self.client.put(reverse('lan_piston_update', args=[lan.pk]),
+                            {'name': 'Mod', 'info': lan.info,
+                             'geo': json.dumps(poly_data_1)})
+        lan = Lan.objects.latest('pk')
+        assert lan.name == 'Mod'
 
     def test_create_points(self):
         point1 = Point(**point_data_1)
@@ -105,7 +104,6 @@ class PolygonTest(TestCase):
         wifi = Wifi.objects.latest('pk')
         response = self.client.put(reverse('wifi_piston_update', args=[wifi.pk]),
                             {'name': 'Mod', 'info': wifi.info,
-                             'geo': json.dumps({'lat': wifi.geo.lat,
-                                                'lon': wifi.geo.lon})})
+                             'geo': json.dumps(point_data_1)})
         wifi = Wifi.objects.latest('pk')
         assert wifi.name == 'Mod'

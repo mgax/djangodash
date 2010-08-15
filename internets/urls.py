@@ -7,7 +7,7 @@ from handlers import LanHandler, WifiHandler
 urlpatterns = patterns('',
     url(r'^lan$', Resource(LanHandler),
         {'emitter_format': 'json'}, name="lan_piston"),
-    url(r'^lan/(?P<pk>\d+)/$', Resource(WifiHandler),
+    url(r'^lan/(?P<pk>\d+)/$', Resource(LanHandler),
         {'emitter_format': 'json'}, name="lan_piston_update"),
 
     url(r'^wifi$', Resource(WifiHandler),

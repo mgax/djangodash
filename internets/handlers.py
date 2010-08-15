@@ -1,6 +1,6 @@
 import json
 from piston.handler import BaseHandler
-from models import Lan, Wifi, Point, filter_polygons, filter_points, \
+from models import Lan, Wifi, Point, Polygon, filter_polygons, filter_points, \
                     save_polygon
 from forms import GetForm, PostForm
 from piston.utils import rc, validate
@@ -40,13 +40,9 @@ class LanHandler(BaseHandler):
             return rc.FORBIDDEN
         lan.name = request.form.cleaned_data['name']
         lan.info = request.form.cleaned_data['info']
-        geo = json.loads(request.form.cleaned_data['geo'])
-        if not (wifi.geo.lat == geo['lat'] and wifi.geo.lon == geo['lon']):
-            point = Point(**geo)
-        else:
-            point = wifi.geo
-        wifi.geo = point
-        wifi.save()
+        if request.form.cleaned_data['geo'] != lan.geo.points_json:
+            lan.geo = save_polygon(request.form.cleaned_data['geo'])
+        lan.save()
 
 class WifiHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'PUT')
@@ -86,8 +82,5 @@ class WifiHandler(BaseHandler):
         wifi.info = request.form.cleaned_data['info']
         geo = json.loads(request.form.cleaned_data['geo'])
         if not (wifi.geo.lat == geo['lat'] and wifi.geo.lon == geo['lon']):
-            point = Point(**geo)
-        else:
-            point = wifi.geo
-        wifi.geo = point
+            wifi.geo = Point(**geo)
         wifi.save()
