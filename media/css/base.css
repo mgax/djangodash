@@ -112,6 +112,11 @@ aside ul li {
   background-position: 0px 1px;
 }
 
+#internets-list {
+  max-height: 500px;
+  overflow: auto;
+}
+
 #internets-list li{
   background-position: 5px;
   cursor: pointer;
