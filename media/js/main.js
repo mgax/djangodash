@@ -76,5 +76,7 @@ $(function() {
         internets.newNetwork(map.gmap, evt.latLng);
       });
     });
+
+    new internets.InternetsBrowser(map.gmap);
   }
 });
