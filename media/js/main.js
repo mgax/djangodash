@@ -1,5 +1,24 @@
 (function() {
-  window.internets = {};
+
+  (function() {
+    var icon_url_normal = MEDIA_URL+"images/vertex-normal.png";
+    var icon_url_hover = MEDIA_URL+"images/vertex-hover.png";
+    var icon_url_midpoint = MEDIA_URL+"images/vertex-midpoint.png";
+
+    var icon_normal = new google.maps.MarkerImage(icon_url_normal);
+    var icon_hover = new google.maps.MarkerImage(icon_url_hover);
+    var icon_midpoint = new google.maps.MarkerImage(icon_url_midpoint);
+
+    icon_normal.anchor = new google.maps.Point(8, 8);
+    icon_hover.anchor = new google.maps.Point(8, 8);
+    icon_midpoint.anchor = new google.maps.Point(6, 6);
+
+    window.internets = {
+      icon_normal: icon_normal,
+      icon_hover: icon_hover,
+      icon_midpoint: icon_midpoint
+    };
+  })();
 
   internets.Map = function(element, options) {
     var gmap;

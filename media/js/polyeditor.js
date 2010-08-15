@@ -6,17 +6,6 @@ internets.PolyEditor = function(map, point) {
   var width = bounds.getSouthWest().lng() - bounds.getNorthEast().lng();
   var delta = width/12;
 
-  var icon_url_normal = MEDIA_URL+"images/vertex-normal.png";
-  var icon_url_hover = MEDIA_URL+"images/vertex-hover.png";
-  var icon_url_midpoint = MEDIA_URL+"images/vertex-midpoint.png";
-  var icon_normal = new google.maps.MarkerImage(icon_url_normal);
-  var icon_hover = new google.maps.MarkerImage(icon_url_hover);
-  var icon_midpoint = new google.maps.MarkerImage(icon_url_midpoint);
-  icon_normal.anchor = new google.maps.Point(8, 8);
-  icon_hover.anchor = new google.maps.Point(8, 8);
-  icon_midpoint.anchor = new google.maps.Point(6, 6);
-
-
   var vertices = new google.maps.MVCArray();
   var vertice_points = new google.maps.MVCArray();
   createVertex(lat-delta, lon-delta);
@@ -48,13 +37,13 @@ internets.PolyEditor = function(map, point) {
   function promoteToVertex(marker, n) {
     vertices.insertAt(n, marker);
     vertice_points.insertAt(n, marker.getPosition());
-    marker.setIcon(icon_normal);
+    marker.setIcon(internets.icon_normal);
 
     // change icon on mouseover and mouseout
     google.maps.event.addListener(marker, 'mouseover', function(evt) {
-      marker.setIcon(icon_hover); });
+      marker.setIcon(internets.icon_hover); });
     google.maps.event.addListener(marker, 'mouseout', function(evt) {
-      marker.setIcon(icon_normal); });
+      marker.setIcon(internets.icon_normal); });
 
     // keep our index up-to-date when vertices are added/removed
     google.maps.event.addListener(vertice_points, 'insert_at',
@@ -74,7 +63,7 @@ internets.PolyEditor = function(map, point) {
     midpoints.forEach(function(marker, i) { marker.setMap(null); });
     midpoints = new google.maps.MVCArray();
     vertice_points.forEach(function() {
-      var marker = new google.maps.Marker({ map: map, icon: icon_midpoint,
+      var marker = new google.maps.Marker({ map: map, icon: internets.icon_midpoint,
                                             draggable: true });
       var n = midpoints.push(marker) - 1;
       google.maps.event.addListenerOnce(marker, 'drag', function(evt) {
