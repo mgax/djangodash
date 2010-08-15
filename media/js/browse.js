@@ -27,7 +27,7 @@ internets.InternetsBrowser = function(map) {
         points.push(new google.maps.LatLng(p.lat, p.lon));
       });
       var polygon = new google.maps.Polygon({ map: map, paths: points });
-
+      google.maps.event.addListener(polygon, 'click', focusOnLan);
       var li = $('<li class="lan">').text(lan_data['name']);
       styleNormal();
       li.mouseover(styleHighlight);

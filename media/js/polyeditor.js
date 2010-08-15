@@ -32,7 +32,8 @@ internets.PolyEditor = function(map, point) {
   return {
     vertices: vertices,
     vertice_points: vertice_points,
-    destroy: destroy
+    destroy: destroy,
+    polygon: polygon
   }
 
 
