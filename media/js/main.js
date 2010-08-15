@@ -32,33 +32,52 @@
   internets.newNetwork = function(map, point) {
     var poly_editor = new internets.PolyEditor(map, point);
 
-    var frm = $('<form>').submit(function(evt) {
+    var form = $('<form>').submit(function(evt) {
       evt.preventDefault();
       var points = [];
       poly_editor.vertice_points.forEach(function(p) {
         points.push({lat: p.lat(), lon: p.lng()});
       });
-      var form_data = frm.serialize() + '&geo=' +
+      var form_data = form.serialize() + '&geo=' +
                       encodeURIComponent(JSON.stringify(points));
-      $(':input', frm).attr('disabled', 'disabled');
-      frm.append('saving... ');
+
       $.ajax({url: "/api/lan", type: 'POST', data: form_data,
-              success: cleanup, error: function() {
-                frm.append('ERROR');
-                $(':input', frm).attr('disabled', null);
-              } });
+          beforeSend: function() {
+            form.find(":input").attr('disabled', 'disabled');
+            form.addClass('saving');
+          },
+
+          success: function() {
+            form.remove();
+            marker.destroy();
+          },
+
+          error: function() {
+            form.addClass('error');
+          },
+
+          complete: function() {
+            form.removeClass('loading');
+            $(':input', form).attr('disabled', null);
+          }
+      });
     });
-    frm.append('<input type="text" name="name" placeholder="Lan Name">',
-               '<textarea name="info" placeholder="Lan Information"></textarea>',
-               '<input type="submit" name="do" value="save">');
-    $('<input type="submit" name="do" value="cancel">').click(function(evt) {
-      evt.preventDefault(); cleanup(); }).appendTo(frm);
+
+    form.bind('reset', function() {
+      cleanup();
+      return false;
+    });
+
+    form.append('<input type="text" name="name" placeholder="Lan Name">',
+                '<textarea name="info" placeholder="Lan Information"></textarea>',
+                '<input type="submit" name="do" value="save">',
+                '<input type="reset" name="do" value="cancel">');
 
     function cleanup() {
-      frm.remove();
+      form.remove();
       poly_editor.destroy();
     }
-    frm.appendTo($('div#new-forms'));
+    form.appendTo($('div#new-forms'));
   }
 
   internets.newWifi = function(map, point) {
