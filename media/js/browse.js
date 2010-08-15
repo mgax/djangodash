@@ -79,13 +79,13 @@ internets.InternetsBrowser = function(map) {
       points.push(new google.maps.LatLng(p.lat, p.lon));
     });
     var polygon = new google.maps.Polygon({ map: map, paths: points });
-    google.maps.event.addListener(polygon, 'click', focusOnLan);
+    google.maps.event.addListener(polygon, 'click', showBubble);
 
     var li = $('<li class="lan">').text(lan_data['name']);
     styleNormal();
     li.mouseover(styleHighlight);
     li.mouseout(styleNormal);
-    li.click(focusOnLan);
+    li.click(showBubble);
     li.data('polygon', polygon);
     internets_list.append(li);
 
@@ -95,14 +95,6 @@ internets.InternetsBrowser = function(map) {
 
     function styleNormal() {
       polygon.setOptions({fillOpacity: .3});
-    }
-
-    function focusOnLan(event) {
-      var geo = lan_data['geo'];
-      var ne = new google.maps.LatLng(geo['bbox_top'], geo['bbox_right']);
-      var sw = new google.maps.LatLng(geo['bbox_bottom'], geo['bbox_left']);
-      map.fitBounds(new google.maps.LatLngBounds(sw, ne));
-      showBubble()
     }
 
     function showBubble(){
