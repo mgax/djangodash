@@ -51,6 +51,7 @@ internets.InternetsBrowser = function(map) {
     li.mouseout(styleNormal);
     li.data('marker', marker);
     internets_list.append(li);
+    google.maps.event.addListener(marker, 'click', showBubble);
 
     function styleHighlight() {
       marker.setIcon(internets.icon_hover);
@@ -58,6 +59,15 @@ internets.InternetsBrowser = function(map) {
 
     function styleNormal() {
       marker.setIcon(internets.icon_normal);
+    }
+
+    function showBubble(){
+      var bubble = new google.maps.InfoWindow({
+        content:
+          "<h3>"+wifi_data['name']+"</h3>" +
+          "<p>"+wifi_data['info']+"</p>"
+      });
+      bubble.open(map, marker);
     }
   }
 
