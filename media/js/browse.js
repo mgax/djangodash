@@ -76,11 +76,22 @@ internets.InternetsBrowser = function(map) {
       polygon.setOptions({fillOpacity: .3});
     }
 
-    function focusOnLan() {
+    function focusOnLan(event) {
       var geo = lan_data['geo'];
       var ne = new google.maps.LatLng(geo['bbox_top'], geo['bbox_right']);
       var sw = new google.maps.LatLng(geo['bbox_bottom'], geo['bbox_left']);
       map.fitBounds(new google.maps.LatLngBounds(sw, ne));
+      showBubble()
+    }
+
+    function showBubble(){
+      var bubble = new google.maps.InfoWindow({
+        content:
+          "<h3>"+lan_data['name']+"</h3>" +
+          "<p>"+lan_data['info']+"</p>"
+      });
+      polygon.position = polygon.getPath().getAt(0);
+      bubble.open(map, polygon);
     }
   }
 }
