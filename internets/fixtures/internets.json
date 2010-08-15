@@ -1,0 +1,217 @@
+[
+  {
+    "pk": 1, 
+    "model": "internets.point", 
+    "fields": {
+      "lat": 44.45752394956184, 
+      "lon": 26.08377655029296
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "internets.point", 
+    "fields": {
+      "lat": 44.434974681024244, 
+      "lon": 26.102315979003897
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "internets.point", 
+    "fields": {
+      "lat": 44.414010763590866, 
+      "lon": 26.09579284667968
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "internets.point", 
+    "fields": {
+      "lat": 44.43840665297135, 
+      "lon": 26.11347396850585
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "internets.polygon", 
+    "fields": {
+      "bbox_right": 44.85693359375, 
+      "bbox_left": 42.670654296875, 
+      "points_json": "[{\"lat\":24.212852017142048,\"lon\":44.438079833984375},{\"lat\":23.368616549775982,\"lon\":44.85693359375},{\"lat\":22.681066942164815,\"lon\":43.384765625},{\"lat\":23.18695998444108,\"lon\":42.670654296875}]", 
+      "bbox_bottom": 22.681066942164815, 
+      "bbox_top": 24.212852017142048
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "internets.polygon", 
+    "fields": {
+      "bbox_right": 26.091383934021, 
+      "bbox_left": 26.08389520645142, 
+      "points_json": "[{\"lat\":44.43295461391457,\"lon\":26.091383934021},{\"lat\":44.43010459980446,\"lon\":26.09114789962769},{\"lat\":44.43057961180754,\"lon\":26.08389520645142},{\"lat\":44.433383636261084,\"lon\":26.084281444549564}]", 
+      "bbox_bottom": 44.43010459980446, 
+      "bbox_top": 44.433383636261084
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "internets.polygon", 
+    "fields": {
+      "bbox_right": 26.09361553192139, 
+      "bbox_left": 26.0873498916626, 
+      "points_json": "[{\"lat\":44.43940493900663,\"lon\":26.090075016021732},{\"lat\":44.43900660226609,\"lon\":26.089946269989017},{\"lat\":44.438470375442336,\"lon\":26.091941833496097},{\"lat\":44.437658365455285,\"lon\":26.092456817626957},{\"lat\":44.4370761626697,\"lon\":26.09310054779053},{\"lat\":44.434731971703336,\"lon\":26.09361553192139},{\"lat\":44.4345940751885,\"lon\":26.089753150939945},{\"lat\":44.43900660226609,\"lon\":26.0873498916626}]", 
+      "bbox_bottom": 44.4345940751885, 
+      "bbox_top": 44.43940493900663
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "internets.polygon", 
+    "fields": {
+      "bbox_right": 26.090493440628055, 
+      "bbox_left": 26.085740566253666, 
+      "points_json": "[{\"lat\":44.453643693538076,\"lon\":26.088701725006107},{\"lat\":44.451162309894315,\"lon\":26.090493440628055},{\"lat\":44.45067214756911,\"lon\":26.087435722351078},{\"lat\":44.45237238052093,\"lon\":26.085740566253666},{\"lat\":44.453513500103476,\"lon\":26.086534500122074}]", 
+      "bbox_bottom": 44.45067214756911, 
+      "bbox_top": 44.453643693538076
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "internets.polygon", 
+    "fields": {
+      "bbox_right": 26.066996650695792, 
+      "bbox_left": 26.059615211486808, 
+      "points_json": "[{\"lat\":44.44058217365271,\"lon\":26.06553752899169},{\"lat\":44.43967826996643,\"lon\":26.066996650695792},{\"lat\":44.43846793635286,\"lon\":26.06600959777831},{\"lat\":44.43711968711262,\"lon\":26.066889362335196},{\"lat\":44.43552626153869,\"lon\":26.063627796173087},{\"lat\":44.435388366898195,\"lon\":26.061997013092032},{\"lat\":44.434591635937196,\"lon\":26.059615211486808},{\"lat\":44.43742611012623,\"lon\":26.06002290725707},{\"lat\":44.43748739453613,\"lon\":26.060645179748526},{\"lat\":44.43926461446291,\"lon\":26.060988502502433},{\"lat\":44.439555705678096,\"lon\":26.062168674468985},{\"lat\":44.439065445953766,\"lon\":26.06379945755004}]", 
+      "bbox_bottom": 44.434591635937196, 
+      "bbox_top": 44.44058217365271
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "WiFi la Izvor!", 
+      "lock": false, 
+      "name": "izvor"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "acoperire pe tot ci\u015fmigiul", 
+      "lock": false, 
+      "name": "Ci\u015fmigiu"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "re\u0163eaua de la guvern. pls hack.", 
+      "lock": false, 
+      "name": "boc net"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "\u00een gr\u0103dina botanic\u0103", 
+      "lock": false, 
+      "name": "boschet net"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "la costel", 
+      "lock": false, 
+      "name": "WiFi Kiseleff"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "one wifi to rule them all", 
+      "lock": false, 
+      "name": "bucure\u015fti central"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "parcul carol", 
+      "lock": false, 
+      "name": "la carol"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "internets.provider", 
+    "fields": {
+      "info": "da.", 
+      "lock": false, 
+      "name": "mo\u015filor"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "internets.lan", 
+    "fields": {
+      "geo": 2
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "internets.lan", 
+    "fields": {
+      "geo": 3
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "internets.lan", 
+    "fields": {
+      "geo": 4
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "internets.lan", 
+    "fields": {
+      "geo": 5
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "internets.wifi", 
+    "fields": {
+      "geo": 1
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "internets.wifi", 
+    "fields": {
+      "geo": 2
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "internets.wifi", 
+    "fields": {
+      "geo": 3
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "internets.wifi", 
+    "fields": {
+      "geo": 4
+    }
+  }
+]
