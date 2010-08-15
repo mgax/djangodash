@@ -4,7 +4,7 @@
   internets.Map = function(element, options) {
     var gmap;
     options = options || {}
-    var coords = options.coordinates || { lat: 23, lon: 44 };
+    var coords = options.coordinates || { lat: 44.44, lon: 26.08 };
 
     function initializeMap() {
       var latlng = new google.maps.LatLng(coords.lat, coords.lon);
