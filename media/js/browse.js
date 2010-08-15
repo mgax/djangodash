@@ -29,8 +29,24 @@ internets.InternetsBrowser = function(map) {
       var polygon = new google.maps.Polygon({ map: map, paths: points });
 
       var li = $('<li class="lan">').text(lan_data['name']);
+      styleNormal();
+      li.mouseover(styleHighlight);
+      li.mouseout(styleNormal);
+      li.click(focusOnLan);
+
       li.data('polygon', polygon);
       internets_list.append(li);
+
+      function styleHighlight() {
+        polygon.setOptions({fillOpacity: .6});
+      }
+
+      function styleNormal() {
+        polygon.setOptions({fillOpacity: .3});
+      }
+
+      function focusOnLan() {
+      }
     }
   }
 }
