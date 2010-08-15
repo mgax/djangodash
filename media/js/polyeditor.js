@@ -1,4 +1,7 @@
-function createPolyEditor(map, lat, lon) {
+(function() {
+
+internets.PolyEditor = function(map, point) {
+  var lat = point.lat(), lon = point.lng();
   var bounds = map.getBounds();
   var width = bounds.getSouthWest().lng() - bounds.getNorthEast().lng();
   var delta = width/8;
@@ -15,6 +18,7 @@ function createPolyEditor(map, lat, lon) {
 
 
   var vertices = new google.maps.MVCArray();
+  var vertice_points = new google.maps.MVCArray();
   createVertex(lat+delta, lon+delta);
   createVertex(lat+delta, lon-delta);
   createVertex(lat-delta, lon-delta);
@@ -23,10 +27,16 @@ function createPolyEditor(map, lat, lon) {
   var midpoints = new google.maps.MVCArray();
   recreateMidpoints();
 
-  var poly = new google.maps.Polygon({ map: map, paths: vertices });
+  var polygon = new google.maps.Polygon({ map: map, paths: vertice_points });
+
+  return {
+    vertice_points: vertice_points,
+    destroy: destroy
+  }
+
 
   function createVertex(lat, lon, n) {
-    if(n == null) n = vertices.getLength();
+    if(n == null) n = vertice_points.getLength();
     var coord = new google.maps.LatLng(lat, lon);
     var marker = new google.maps.Marker({ map: map, position: coord,
                                           draggable: true });
@@ -34,7 +44,8 @@ function createPolyEditor(map, lat, lon) {
   }
 
   function promoteToVertex(marker, n) {
-    vertices.insertAt(n, marker.getPosition());
+    vertices.insertAt(n, marker);
+    vertice_points.insertAt(n, marker.getPosition());
     marker.setIcon(icon_normal);
 
     // change icon on mouseover and mouseout
@@ -44,15 +55,15 @@ function createPolyEditor(map, lat, lon) {
       marker.setIcon(icon_normal); });
 
     // keep our index up-to-date when vertices are added/removed
-    google.maps.event.addListener(vertices, 'insert_at',
+    google.maps.event.addListener(vertice_points, 'insert_at',
                                   function(idx) { if(n >= idx) n += 1; });
-    google.maps.event.addListener(vertices, 'remove_at',
+    google.maps.event.addListener(vertice_points, 'remove_at',
                                   function(idx) { if(n <= idx) n -= 1; });
 
     // update our point in the polygon path
     google.maps.event.addListener(marker, 'drag', function(evt) {
       var new_coord = evt.latLng;
-      vertices.setAt(n, new_coord);
+      vertice_points.setAt(n, new_coord);
       updateMidpoints();
     });
   }
@@ -60,13 +71,13 @@ function createPolyEditor(map, lat, lon) {
   function recreateMidpoints() {
     midpoints.forEach(function(marker, i) { marker.setMap(null); });
     midpoints = new google.maps.MVCArray();
-    vertices.forEach(function() {
+    vertice_points.forEach(function() {
       var marker = new google.maps.Marker({ map: map, icon: icon_midpoint,
                                             draggable: true });
-      var n = midpoints.push(marker);
-      google.maps.event.addListener(marker, 'drag', function(evt) {
-        google.maps.event.clearListeners(marker, 'drag');
-        promoteToVertex(marker, n);
+      var n = midpoints.push(marker) - 1;
+      google.maps.event.addListenerOnce(marker, 'drag', function(evt) {
+        midpoints.removeAt(n);
+        promoteToVertex(marker, n+1);
         recreateMidpoints();
       });
     });
@@ -75,10 +86,18 @@ function createPolyEditor(map, lat, lon) {
 
   function updateMidpoints() {
     midpoints.forEach(function(marker, n1) {
-      var n2 = (n1+1 < vertices.getLength()) ? (n1+1) : 0;
-      var v1 = vertices.getAt(n1), v2 = vertices.getAt(n2);
+      var n2 = (n1+1 < vertice_points.getLength()) ? (n1+1) : 0;
+      var v1 = vertice_points.getAt(n1), v2 = vertice_points.getAt(n2);
       var lat = (v1.lat() + v2.lat()) / 2, lon = (v1.lng() + v2.lng()) / 2;
       marker.setPosition(new google.maps.LatLng(lat, lon));
     });
   }
+
+  function destroy() {
+    polygon.setMap(null);
+    vertices.forEach(function(m) { m.setMap(null); });
+    midpoints.forEach(function(m) { m.setMap(null); });
+  }
 }
+
+})();

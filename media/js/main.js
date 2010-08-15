@@ -1,5 +1,7 @@
 (function() {
-  function Map(element, options) {
+  window.internets = {};
+
+  internets.Map = function(element, options) {
     var gmap;
     options = options || {}
     var coords = options.coordinates || { lat: 23, lon: 44 };
@@ -33,14 +35,16 @@
     }
 
   }
+})();
 
-
+$(function() {
   var map_element = document.getElementById('map');
   if ( map_element ) {
-    var map = new Map(map_element);
-    /*setTimeout(function() {
-        var center = map.gmap.getCenter();
-        createPolyEditor(map.gmap, center.lat(), center.lng());
-    }, 500); /* */
+    var map = new internets.Map(map_element);
+
+    google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
+      var poly_editor = new internets.PolyEditor(map.gmap, evt.latLng);
+      internets.destroyPoly = function() { poly_editor.destroy(); };
+    });
   }
-})();
+});
