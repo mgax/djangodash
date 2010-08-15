@@ -60,6 +60,41 @@
     }
     frm.appendTo($('div#new-forms'));
   }
+
+  internets.newWifi = function(map, point) {
+    var marker = internets.WifiPoint(map, point);
+    var form = $('<form>').submit(function() {
+      var form_data = form.serialize() + '&geo=' + encodeURIComponent(JSON.stringify(marker.position()));
+      $.ajax({url: "/api/wifi", type: 'POST', data: form_data,
+
+          beforeSend: function() {
+            form.find(":input").attr('disabled', 'disabled');
+            form.addClass('saving');
+          },
+
+          success: function() {
+            console.log('success');
+            form.remove();
+            marker.destroy();
+          },
+
+          error: function() {
+            form.addClass('error');
+          },
+
+          complete: function() {
+            form.removeClass('loading');
+            $(':input', form).attr('disabled', null);
+          }
+        });
+      return false;
+    });
+
+    form.append('<input name="name">',
+                '<textarea name="info"></textarea>',
+                '<input type="submit" name="do" value="save">');
+    form.appendTo($('div#new-forms'));
+  }
 })();
 
 $(function() {
@@ -78,5 +113,14 @@ $(function() {
     });
 
     new internets.InternetsBrowser(map.gmap);
+    $('button#new-wifi').click(function() {
+      var button = $(this);
+      var orig_text = button.text();
+      button.attr('disabled', 'disabled').text("Click on map");
+      google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
+        button.text(orig_text).attr('disabled', null);
+        internets.newWifi(map.gmap, evt.latLng);
+      });
+    });
   }
 });
