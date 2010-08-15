@@ -38,6 +38,9 @@
   var map_element = document.getElementById('map');
   if ( map_element ) {
     var map = new Map(map_element);
-    //setTimeout(function() { createPolyEditor(map.gmap, 0, 0); }, 500);
+    /*setTimeout(function() {
+        var center = map.gmap.getCenter();
+        createPolyEditor(map.gmap, center.lat(), center.lng());
+    }, 500); /* */
   }
 })();
