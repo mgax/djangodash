@@ -7,6 +7,7 @@ internets.InternetsBrowser = function(map) {
   var internets_list = $('ul#internets-list');
 
   return {
+    refresh: refreshInternets
   }
 
   function refreshInternets() {

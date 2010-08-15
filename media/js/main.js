@@ -48,7 +48,7 @@
 
   }
 
-  internets.newNetwork = function(map, point) {
+  internets.newNetwork = function(map, point, browser) {
     var lat = point.lat(), lon = point.lng();
     var bounds = map.getBounds();
     var width = bounds.getSouthWest().lng() - bounds.getNorthEast().lng();
@@ -76,6 +76,7 @@
 
           success: function() {
             cleanup();
+            browser.refresh();
           },
 
           error: function() {
@@ -107,7 +108,7 @@
     form.appendTo($('div#new-forms'));
   }
 
-  internets.newWifi = function(map, point) {
+  internets.newWifi = function(map, point, browser) {
     var marker = internets.PointEditor(map, point);
     var form = $('<form>').submit(function() {
       var form_data = form.serialize() + '&geo=' + encodeURIComponent(JSON.stringify(marker.position()));
@@ -122,6 +123,7 @@
             form.remove();
             marker.destroy();
             $('aside button').attr('disabled', null);
+            browser.refresh();
           },
 
           error: function() {
@@ -164,11 +166,11 @@ $(function() {
 
       google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
         button.text(orig_text);
-        internets.newNetwork(map.gmap, evt.latLng);
+        internets.newNetwork(map.gmap, evt.latLng, browser);
       });
     });
 
-    new internets.InternetsBrowser(map.gmap);
+    var browser = new internets.InternetsBrowser(map.gmap);
     $('button#new-wifi').click(function() {
       var button = $(this);
       var orig_text = button.text();
@@ -178,7 +180,7 @@ $(function() {
 
       google.maps.event.addListenerOnce(map.gmap, 'click', function(evt) {
         button.text(orig_text);
-        internets.newWifi(map.gmap, evt.latLng);
+        internets.newWifi(map.gmap, evt.latLng, browser);
       });
     });
   }
