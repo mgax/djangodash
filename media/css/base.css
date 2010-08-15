@@ -95,7 +95,7 @@ aside {
   position: absolute;
   right: 0px;
   top: 0px;
-  width: 170px;
+  width: 200px;
   height: 600px;
   margin: .5em;
 }
@@ -176,4 +176,26 @@ fieldset label {
   border-radius: .5em 0em 0em .5em;
   padding: .5em;
   height: auto;
+}
+
+#new-forms form {
+  margin-top: 1em;
+  padding: .25em;
+}
+
+#new-forms textarea, #new-forms input[type=text] {
+  width: 180px;
+  border: 1px solid #CCC;
+}
+
+#new-forms textarea {
+  margin: .5em 0;
+}
+
+#new-forms .error {
+  background-color: #FAD;
+}
+
+#new-forms .loading {
+  background-color: #EEE;
 }

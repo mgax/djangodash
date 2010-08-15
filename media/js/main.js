@@ -48,8 +48,8 @@
                 $(':input', frm).attr('disabled', null);
               } });
     });
-    frm.append('<input name="name">',
-               '<textarea name="info"></textarea>',
+    frm.append('<input type="text" name="name" placeholder="Lan Name">',
+               '<textarea name="info" placeholder="Lan Information"></textarea>',
                '<input type="submit" name="do" value="save">');
     $('<input type="submit" name="do" value="cancel">').click(function(evt) {
       evt.preventDefault(); cleanup(); }).appendTo(frm);
@@ -73,7 +73,6 @@
           },
 
           success: function() {
-            console.log('success');
             form.remove();
             marker.destroy();
           },
@@ -90,9 +89,12 @@
       return false;
     });
 
-    form.append('<input name="name">',
-                '<textarea name="info"></textarea>',
-                '<input type="submit" name="do" value="save">');
+    form.bind('reset', function() { form.remove(); marker.destroy(); });
+
+    form.append('<input type="text" name="name" placeholder="Wireless Network Name">',
+                '<textarea name="info" placeholder="Wireless Network Information"></textarea>',
+                '<input type="submit" name="do" value="save">',
+                '<input type="reset" name="do" value="cancel">');
     form.appendTo($('div#new-forms'));
   }
 })();
